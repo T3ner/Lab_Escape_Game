@@ -1,23 +1,28 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractDetect : MonoBehaviour
 {
     [SerializeField]
     Transform player;
     [SerializeField]
-    Collider[] interactables;
-    [SerializeField]
     float sphereRad;
     
     Vector3 collDist1;
     Vector3 collDist2;
+    public Collider[] interactables;
+
+    public GameObject interactButton;
 
     private void Update()
     {
        interactables =  Physics.OverlapSphere(player.position, sphereRad, layerMask: 1 << 6);
 
-        if (interactables != null)
+        if (interactables.Length != 0)
         {
+            //Sorting algorithm to set 1st element of interactables array to the closest interactable object
             for (int i = 0; i < interactables.Length - 1; i++)
             {
                 collDist1 = interactables[i].transform.position - player.transform.position;
@@ -30,12 +35,15 @@ public class InteractDetect : MonoBehaviour
                     interactables[i+1] = temp;
                 }
             }
+            interactButton.SetActive(true);
+           
+            //Changes button text base on which Interactable object is closest
+            TextMeshProUGUI buttonText = interactButton.GetComponentInChildren<TextMeshProUGUI>();
+            buttonText.SetText(interactables[0].name);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(player.position, sphereRad);
+        else
+        {
+            interactButton.SetActive(false);
+        }
     }
 }
