@@ -1,7 +1,8 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class InteractDetect : MonoBehaviour
 {
@@ -9,12 +10,18 @@ public class InteractDetect : MonoBehaviour
     Transform player;
     [SerializeField]
     float sphereRad;
+    [SerializeField]
+    GameObject handSlot;
     
     Vector3 collDist1;
     Vector3 collDist2;
-    public Collider[] interactables;
+    string intActName;
 
+    public Collider[] interactables;
     public GameObject interactButton;
+    public GameObject pickUpButton;
+
+    public UnityEvent interactEvent;
 
     private void Update()
     {
@@ -35,15 +42,39 @@ public class InteractDetect : MonoBehaviour
                     interactables[i+1] = temp;
                 }
             }
-            interactButton.SetActive(true);
            
-            //Changes button text base on which Interactable object is closest
-            TextMeshProUGUI buttonText = interactButton.GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.SetText(interactables[0].name);
+            //Changes button text based on which Interactable object is closest
+            if (interactables[0].name.Contains("Button"))
+            {
+                interactButton.SetActive(true);
+                intActName = "Open";
+                interactButton.GetComponentInChildren<TextMeshProUGUI>().SetText(intActName);
+            }else if (interactables[0].name.Contains("Pick"))
+            {
+                pickUpButton.SetActive(true);
+                intActName = "Pick Up";
+                pickUpButton.GetComponentInChildren<TextMeshProUGUI>().SetText(intActName);
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {
+            pickUpButton.SetActive(false);
             interactButton.SetActive(false);
         }
     }
+
+    public void PickUp()
+    {
+        Rigidbody pickable = interactables[0].GetComponent<Rigidbody>();
+
+        if (interactables[0].CompareTag("PhyObj"))
+        {
+            pickable.transform.position = handSlot.transform.position;
+        }
+    }
+
 }

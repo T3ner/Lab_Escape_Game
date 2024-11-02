@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4999503079848667225}
   - component: {fileID: 2663032116364382136}
   - component: {fileID: 1260081383421873576}
+  - component: {fileID: 8787790198987442578}
   m_Layer: 8
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -65,6 +66,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 185413073047216940}
   - {fileID: 7293149892342210311}
   - {fileID: 8387764867162522216}
   - {fileID: 1825942528814197032}
@@ -110,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 4
   SprintSpeed: 6
-  RotationSpeed: 0.1
+  RotationSpeed: 1
   SpeedChangeRate: 10
   JumpHeight: 1.2
   Gravity: -15
@@ -123,8 +125,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   CinemachineCameraTarget: {fileID: 8470208268185826697}
-  TopClamp: 85
-  BottomClamp: -85
+  TopClamp: 45
+  BottomClamp: -45
 --- !u!114 &4999503079848667225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +258,27 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &8787790198987442578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826670936648941502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188b68aea5670b74ea5540e751f89d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 7293149892342210311}
+  sphereRad: 2
+  handSlot: {fileID: 6837686117643244258}
+  interactables: []
+  interactButton: {fileID: 0}
+  pickUpButton: {fileID: 0}
+  interactEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4333786035740765933
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +386,37 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6837686117643244258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185413073047216940}
+  m_Layer: 8
+  m_Name: Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185413073047216940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837686117643244258}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1, z: 2.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 518009771856034997}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8470208268185826697
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +470,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 17.137774
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -430,8 +484,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.2
-  far clip plane: 500
-  field of view: 40
+  far clip plane: 100
+  field of view: 70.00001
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
