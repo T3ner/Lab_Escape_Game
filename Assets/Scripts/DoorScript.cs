@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class DoorScript : MonoBehaviour
 {
+    //Index used to connect Button to Door
     public int doorIndex;
     public ButtonScript Button;
+
+    //Opens door if closed and closes if opened
     public void MoveDoor()
     {
         if (doorIndex == Button.buttonIndex)

@@ -133,10 +133,7 @@ namespace StarterAssets
 		{
 			// if there is an input
 			if (_input.look.sqrMagnitude >= _threshold)
-			{
-				//Don't multiply mouse input by Time.deltaTime
-				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-				
+			{	
 				_cinemachineTargetPitch =  _input.look.y * RotationSpeed;
 				_rotationVelocity = _input.look.x * RotationSpeed;
 
@@ -145,12 +142,13 @@ namespace StarterAssets
 
 				// Update Cinemachine camera target pitch
 				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f).normalized;
+				
 
 				// rotate the player left and right
 				transform.Rotate((Vector3.up * _rotationVelocity).normalized);
 			}
 		}
-
+		
 		private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
