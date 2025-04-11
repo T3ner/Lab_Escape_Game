@@ -32,8 +32,7 @@ public class InteractDetect : MonoBehaviour
 
     private void Update()
     {
-        interactables =  Physics.OverlapSphere(player.position, sphereRad, layerMask: 1 << 6);
-
+        interactables = Physics.OverlapSphere(player.position, sphereRad, layerMask: 1 << 6);
         if (interactables.Length != 0)
         {
             //Sorting algorithm to set 1st element of interactables array to the closest interactable object
@@ -56,19 +55,19 @@ public class InteractDetect : MonoBehaviour
             //Changes button text based on which Interactable object is closest
             if (interactables[0].name.Contains("Button"))
             {
-                if (pickUpButObj.activeSelf || dropButObj.activeSelf)
+                if (interactButObj.activeSelf || dropButObj.activeSelf)
                 {
                     pickUpButObj.SetActive(false);
                 }
 
                 interactButObj.SetActive(true);
-                intActName = "Open";
+                intActName = "Toggle";
                 interactButObj.GetComponentInChildren<TextMeshProUGUI>().SetText(intActName);
 
             }
             else if (interactables[0].name.Contains("Pick") && pickState == PickState.Empty)
             {
-                if (interactButObj.activeSelf || dropButObj.activeSelf)
+                if (pickUpButObj.activeSelf || dropButObj.activeSelf)
                 {
                     interactButObj.SetActive(false);
                 }
@@ -77,12 +76,16 @@ public class InteractDetect : MonoBehaviour
                 intActName = "Pick Up";
                 pickUpButObj.GetComponentInChildren<TextMeshProUGUI>().SetText(intActName);
             }
-            else
-            {
-                return;
-            }
         }
-        else if (handSlot.GetComponentInChildren<Rigidbody>() != null && pickState == PickState.Picked)
+        //Disables UI buttons
+        else
+        {
+            pickUpButObj.SetActive(false);
+            interactButObj.SetActive(false);
+        }
+
+        //Drop Button toggle
+        if (handSlot.GetComponentInChildren<Rigidbody>() != null && pickState == PickState.Picked)
         {
             if (interactButObj.activeSelf || pickUpButObj.activeSelf)
             {
@@ -93,17 +96,10 @@ public class InteractDetect : MonoBehaviour
             intActName = "Drop";
             dropButObj.GetComponentInChildren<TextMeshProUGUI>().SetText(intActName);
         }
-        else if (handSlot.GetComponentInChildren<Rigidbody>() == null)
+        else
         {
             dropButObj.SetActive(false);
         }
-        //Disables UI buttons
-        else
-        {
-            pickUpButObj.SetActive(false);
-            interactButObj.SetActive(false);
-        }
-        
     }
 
     public void PickUp()
