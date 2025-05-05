@@ -1,11 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager :MonoBehaviour
 {
-    public GameObject pauseMenu;
-    public GameObject pauseButton;
+    [SerializeField] 
+    private GameObject pauseMenu;
+    [SerializeField] 
+    private GameObject pauseButton;
+    [SerializeField]
+    private GameObject contButton;
+
+    private void Awake()
+    {
+        if (File.Exists(Application.persistentDataPath))
+        {
+
+        }
+    }
+
+    public void NewGame()
+    {
+        Gamedata gamedata = new Gamedata();
+        SceneManager.LoadScene("Lab");
+
+    }
+    public void contGame()
+    {
+
+    }
     public void Pause()
     {
         Time.timeScale = 0.0f;
@@ -22,6 +46,6 @@ public class MenuManager :MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
     }
 }

@@ -29,6 +29,8 @@ public class InteractDetect : MonoBehaviour
     {
         pickState = PickState.Empty;
     }
+    public void Savedata(Gamedata gamedata) { 
+    }
 
     private void Update()
     {

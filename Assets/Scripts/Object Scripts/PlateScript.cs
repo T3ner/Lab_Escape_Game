@@ -11,7 +11,8 @@ public class PlateScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "PhyObj")
-        GameEvents.instance.PlateTrigger(id);
+        {
+            GameEvents.instance.PlateTrigger(id);
+        }
     } 
-    
 }

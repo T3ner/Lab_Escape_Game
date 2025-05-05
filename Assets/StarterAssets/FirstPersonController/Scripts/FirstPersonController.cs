@@ -9,7 +9,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 	[RequireComponent(typeof(PlayerInput))]
 #endif
-	public class FirstPersonController : MonoBehaviour
+	public class FirstPersonController : MonoBehaviour, Isave
 	{
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
@@ -74,7 +74,16 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
-		private bool IsCurrentDeviceMouse
+		public void Loaddata(Gamedata gd)
+		{
+			transform.position = gd.playerPos;
+		}
+
+        public void Savedata(Gamedata gd)
+        {
+			gd.playerPos = transform.position;
+        }
+        private bool IsCurrentDeviceMouse
 		{
 			get
 			{
