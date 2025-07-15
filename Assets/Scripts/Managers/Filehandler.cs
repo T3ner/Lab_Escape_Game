@@ -47,7 +47,7 @@ public class Filehandler
         
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
+            Directory.CreateDirectory(fullpath);
 
             string dataToSave = JsonUtility.ToJson(gd, true);
             using (FileStream stream = new FileStream(fullpath, FileMode.Open))

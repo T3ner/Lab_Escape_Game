@@ -26,7 +26,7 @@ public class SaveManger : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        this.fileHandler = new Filehandler(Application.persistentDataPath, filename);
+        this.fileHandler = new Filehandler("C:\\Users\\Ishan\\Unity\\Lab escape\\Saves", filename);
     }
 
     private void OnEnable()

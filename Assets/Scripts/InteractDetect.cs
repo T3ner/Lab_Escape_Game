@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InteractDetect : MonoBehaviour
 {
+    public static InteractDetect Instance;
     enum PickState
     {
         Picked,
@@ -24,6 +25,19 @@ public class InteractDetect : MonoBehaviour
     public GameObject dropButObj;
 
     PickState pickState;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -119,7 +133,6 @@ public class InteractDetect : MonoBehaviour
 
         // Reposition it to the hand slot
         pickable.transform.localPosition = Vector3.zero; // Reset position relative to handSlot
-        pickable.transform.localRotation = Quaternion.identity; // Reset rotation relative to handSlot
 
         pickState = PickState.Picked;
     }

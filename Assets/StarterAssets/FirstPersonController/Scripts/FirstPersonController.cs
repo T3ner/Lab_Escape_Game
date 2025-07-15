@@ -95,7 +95,15 @@ namespace StarterAssets
 			}
 		}
 
-		private void Awake()
+        private void OnEnable()
+        {
+			GameEvents.instance.OnLevelTransition += Transition;
+        }
+        private void OnDisable()
+        {
+            GameEvents.instance.OnLevelTransition -= Transition;
+        }
+        private void Awake()
 		{
 			// get a reference to our main camera
 			if (_mainCamera == null)
@@ -258,6 +266,11 @@ namespace StarterAssets
 			if (lfAngle < -360f) lfAngle += 360f;
 			if (lfAngle > 360f) lfAngle -= 360f;
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
+		}
+
+		public void Transition(Vector3 nxtLvl)
+		{
+			this.gameObject.transform.position = nxtLvl;
 		}
 
 		private void OnDrawGizmosSelected()

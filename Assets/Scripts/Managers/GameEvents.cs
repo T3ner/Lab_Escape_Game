@@ -22,4 +22,10 @@ public class GameEvents : MonoBehaviour
     {
         OnPlateTrigger?.Invoke(id); 
     }
+
+    public event Action<Vector3> OnLevelTransition;
+    public void LevelTransition(Vector3 nxtLvl)
+    {
+        OnLevelTransition?.Invoke(nxtLvl);
+    }
 }
