@@ -12,7 +12,6 @@ public class lvlTrigger : MonoBehaviour
         if (other.gameObject == player)
         {
             player.transform.position = lvlStart;
-            GameEvents.instance.LevelTransition(lvlStart);
             Loadlvl.SetActive(true);
             Currentlvl.SetActive(false);
         }

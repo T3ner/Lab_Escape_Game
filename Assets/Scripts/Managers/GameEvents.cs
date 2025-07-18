@@ -8,7 +8,16 @@ public class GameEvents : MonoBehaviour
     public static GameEvents instance;
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
     public event Action<int> OnButtonPressed;
@@ -21,11 +30,5 @@ public class GameEvents : MonoBehaviour
     public void PlateTrigger(int id) 
     {
         OnPlateTrigger?.Invoke(id); 
-    }
-
-    public event Action<Vector3> OnLevelTransition;
-    public void LevelTransition(Vector3 nxtLvl)
-    {
-        OnLevelTransition?.Invoke(nxtLvl);
     }
 }

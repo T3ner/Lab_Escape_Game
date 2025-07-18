@@ -32,6 +32,7 @@ public class DoorScript : MonoBehaviour
     {   
         if (this.id == id)
         {
+            print(id);
             if (doorState == DoorState.Close)
             {
                 this.gameObject.transform.position = Vector3.Lerp(this.transform.position, this.transform.position + new Vector3(0, 3.5f, 0), 1f);

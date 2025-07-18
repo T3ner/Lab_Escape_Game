@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -94,15 +98,6 @@ namespace StarterAssets
 				#endif
 			}
 		}
-
-        private void OnEnable()
-        {
-			GameEvents.instance.OnLevelTransition += Transition;
-        }
-        private void OnDisable()
-        {
-            GameEvents.instance.OnLevelTransition -= Transition;
-        }
         private void Awake()
 		{
 			// get a reference to our main camera
@@ -134,7 +129,25 @@ namespace StarterAssets
 			Move();
 		}
 
-		private void LateUpdate()
+		private void FixedUpdate()
+		{
+			LayerMask interactMask = LayerMask.GetMask("Interact");
+
+			RaycastHit hit;
+
+			if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 5.0f,interactMask)){
+				
+				if (hit.collider.gameObject.CompareTag("Switch"))
+				{
+
+				}else if (hit.collider.gameObject.CompareTag("Pick"))
+				{
+
+				}
+				
+			}
+		}
+        private void LateUpdate()
 		{
 			CameraRotation();
 		}
@@ -266,11 +279,6 @@ namespace StarterAssets
 			if (lfAngle < -360f) lfAngle += 360f;
 			if (lfAngle > 360f) lfAngle -= 360f;
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
-		}
-
-		public void Transition(Vector3 nxtLvl)
-		{
-			this.gameObject.transform.position = nxtLvl;
 		}
 
 		private void OnDrawGizmosSelected()

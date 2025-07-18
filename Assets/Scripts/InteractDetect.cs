@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class InteractDetect : MonoBehaviour
 {
-    public static InteractDetect Instance;
     enum PickState
     {
         Picked,
@@ -26,18 +25,6 @@ public class InteractDetect : MonoBehaviour
 
     PickState pickState;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
