@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 #endif
 
 namespace StarterAssets
@@ -68,9 +69,20 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
-	
+		//UI Buttons
+		[SerializeField] GameObject pickBut;
+        [SerializeField] GameObject togBut;
+        [SerializeField] GameObject dropBut;
+		ButtonScript button;
+		GameObject pickable;
+		Button togBB;
+
+		//Interact
+		LayerMask interactMask;
+        RaycastHit hit;
+
 #if ENABLE_INPUT_SYSTEM
-		private PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 #endif
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
@@ -100,14 +112,17 @@ namespace StarterAssets
 		}
         private void Awake()
 		{
-			// get a reference to our main camera
-			if (_mainCamera == null)
+            togBB = togBut.GetComponent<Button>();
+            //togBB.onClick.AddListener(button.OnClickHandler);
+            interactMask = LayerMask.GetMask("Interact");
+            // get a reference to our main camera
+            if (_mainCamera == null)
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
 		}
 
-		private void Start()
+        private void Start()
 		{
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
@@ -124,32 +139,38 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			JumpAndGravity();
+            Physics.SyncTransforms();
+            JumpAndGravity();
 			GroundedCheck();
 			Move();
 		}
 
-		private void FixedUpdate()
+		//Interact with object logic
+       
+        private void FixedUpdate()
 		{
-			LayerMask interactMask = LayerMask.GetMask("Interact");
-
-			RaycastHit hit;
-
-			if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 5.0f,interactMask)){
-				
+			if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 5.0f,interactMask)){
 				if (hit.collider.gameObject.CompareTag("Switch"))
 				{
-
-				}else if (hit.collider.gameObject.CompareTag("Pick"))
+					togBut.SetActive(true);
+                }
+				else if (hit.collider.gameObject.CompareTag("PhyObj"))
 				{
-
-				}
-				
+					pickBut.SetActive(true);
+					pickable = hit.collider.GetComponent<GameObject>();
+					print(pickable);
+                }
+			}
+			else
+			{
+				togBut.SetActive(false);
+				pickBut.SetActive(false);
+				dropBut.SetActive(false);
 			}
 		}
         private void LateUpdate()
 		{
-			CameraRotation();
+            CameraRotation();
 		}
 
 		private void GroundedCheck()
@@ -163,8 +184,8 @@ namespace StarterAssets
 		{
 			// if there is an input
 			if (_input.look.sqrMagnitude >= _threshold)
-			{	
-				_cinemachineTargetPitch =  _input.look.y * RotationSpeed;
+			{
+				_cinemachineTargetPitch = _input.look.y * RotationSpeed;
 				_rotationVelocity = _input.look.x * RotationSpeed;
 
 				// clamp our pitch rotation
@@ -172,7 +193,7 @@ namespace StarterAssets
 
 				// Update Cinemachine camera target pitch
 				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f).normalized;
-				
+
 
 				// rotate the player left and right
 				transform.Rotate((Vector3.up * _rotationVelocity).normalized);
@@ -273,6 +294,7 @@ namespace StarterAssets
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}
 		}
+
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{

@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 4999503079848667225}
   - component: {fileID: 2663032116364382136}
   - component: {fileID: 1260081383421873576}
-  - component: {fileID: 8787790198987442578}
   m_Layer: 8
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -94,7 +93,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.25
+  m_StepOffset: 0.5
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.93, z: 0}
@@ -112,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 4
   SprintSpeed: 6
-  RotationSpeed: 1
+  RotationSpeed: 2.03
   SpeedChangeRate: 10
   JumpHeight: 1.2
   Gravity: -15
@@ -127,6 +126,9 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 8470208268185826697}
   TopClamp: 45
   BottomClamp: -45
+  pickBut: {fileID: 0}
+  togBut: {fileID: 0}
+  dropBut: {fileID: 0}
 --- !u!114 &4999503079848667225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,27 +260,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8787790198987442578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826670936648941502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 188b68aea5670b74ea5540e751f89d7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 7293149892342210311}
-  sphereRad: 2
-  handSlot: {fileID: 6837686117643244258}
-  interactables: []
-  interactButton: {fileID: 0}
-  pickUpButton: {fileID: 0}
-  interactEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4333786035740765933
 GameObject:
   m_ObjectHideFlags: 0
