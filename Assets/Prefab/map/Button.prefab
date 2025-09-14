@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 674001018955049228}
   - component: {fileID: 1442149638990203863}
   - component: {fileID: 2833606246222687646}
-  - component: {fileID: 1318856627347895081}
   - component: {fileID: 6127333362095732426}
+  - component: {fileID: 3121016767853629664}
   m_Layer: 6
   m_Name: Button
   m_TagString: Switch
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4135
+  m_VersionIndex: 4138
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -765,28 +765,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5665129754867511581}
   m_Mesh: {fileID: 0}
---- !u!64 &1318856627347895081
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5665129754867511581}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &6127333362095732426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,4 +778,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
-  intBut: {fileID: 0}
+--- !u!65 &3121016767853629664
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665129754867511581}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.06479766, y: 0.3280654, z: 0.16460423}
+  m_Center: {x: 0.020312913, y: 0.10350537, z: 0.0584407}

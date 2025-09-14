@@ -74,12 +74,14 @@ namespace StarterAssets
         [SerializeField] GameObject togBut;
         [SerializeField] GameObject dropBut;
 		ButtonScript button;
-		GameObject pickable;
+		Rigidbody pRb;
 		Button togBB;
 
 		//Interact
 		LayerMask interactMask;
         RaycastHit hit;
+		public GameObject hSlot;
+		PhyObj poScript;
 
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
@@ -95,7 +97,7 @@ namespace StarterAssets
 			transform.position = gd.playerPos;
 		}
 
-        public void Savedata(Gamedata gd)
+        public void Savedata(ref Gamedata gd)
         {
 			gd.playerPos = transform.position;
         }
@@ -114,7 +116,7 @@ namespace StarterAssets
 		{
             togBB = togBut.GetComponent<Button>();
             //togBB.onClick.AddListener(button.OnClickHandler);
-            interactMask = LayerMask.GetMask("Interact");
+            interactMask = LayerMask.GetMask("Pickable");
             // get a reference to our main camera
             if (_mainCamera == null)
 			{
@@ -143,22 +145,26 @@ namespace StarterAssets
             JumpAndGravity();
 			GroundedCheck();
 			Move();
-		}
-
-		//Interact with object logic
-       
+		}       
         private void FixedUpdate()
 		{
-			if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out hit, 5.0f,interactMask)){
+			if (Physics.SphereCast(_mainCamera.transform.position, 0.1f, _mainCamera.transform.forward, out hit, 5.0f, interactMask)){
 				if (hit.collider.gameObject.CompareTag("Switch"))
 				{
 					togBut.SetActive(true);
                 }
 				else if (hit.collider.gameObject.CompareTag("PhyObj"))
 				{
-					pickBut.SetActive(true);
-					pickable = hit.collider.GetComponent<GameObject>();
-					print(pickable);
+					poScript = hit.collider.gameObject.GetComponent<PhyObj>();
+					if (!poScript.picked)
+					{
+						pickBut.SetActive(true);
+						pRb = hit.collider.GetComponent<Rigidbody>();
+					}
+					else
+					{
+						dropBut.SetActive(true);
+					}
                 }
 			}
 			else
@@ -294,9 +300,29 @@ namespace StarterAssets
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}
 		}
+		public void PickUp()
+		{
+            // Make it kinematic (disable physics)
+            pRb.isKinematic = true;
 
+            // Parent it to the hand slot
+            pRb.gameObject.transform.SetParent(hSlot.transform);
 
-		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+            // Reposition it to the hand slot
+            pRb.transform.localPosition = Vector3.zero; // Reset position relative to handSlot	
+
+        }
+
+        public void Drop()
+        {
+            // Make it non-kinematic (enable physics)
+            pRb.isKinematic = false;
+
+            // Remove parent
+            pRb.gameObject.transform.SetParent(null);
+
+        }
+        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
 			if (lfAngle < -360f) lfAngle += 360f;
 			if (lfAngle > 360f) lfAngle -= 360f;

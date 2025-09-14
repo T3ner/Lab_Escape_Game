@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface Isave
 {
-    void Savedata(Gamedata gd);
+    void Savedata(ref Gamedata gd); 
     void Loaddata(Gamedata gd);
 }

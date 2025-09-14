@@ -20,7 +20,7 @@ public class Filehandler
         string fullpath = Path.Combine(dirPath, fileName);
         Gamedata loadedData = null;
 
-        if (File.Exists(fullpath))
+        if (Directory.Exists(fullpath))
         {
             try
             {

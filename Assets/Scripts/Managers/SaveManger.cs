@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,6 @@ public class SaveManger : MonoBehaviour
 
     private List<Isave> IsaveList;
     private Filehandler fileHandler;
-
 
     Gamedata gamedata;
     public static SaveManger instance { get; private set; }
@@ -25,8 +25,7 @@ public class SaveManger : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-
-        this.fileHandler = new Filehandler("C:\\Users\\Ishan\\Unity\\Lab escape\\Saves", filename);
+        this.fileHandler = new Filehandler(Application.persistentDataPath, filename);
     }
 
     private void OnEnable()
@@ -58,7 +57,7 @@ public class SaveManger : MonoBehaviour
 
         foreach (Isave save in IsaveList)
         {
-            save.Savedata(gamedata);
+            save.Savedata(ref gamedata);
         }
         fileHandler.Save(gamedata);
     }
