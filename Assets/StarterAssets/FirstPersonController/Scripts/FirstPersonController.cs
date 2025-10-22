@@ -1,4 +1,5 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -81,7 +82,6 @@ namespace StarterAssets
 		LayerMask interactMask;
         RaycastHit hit;
 		public GameObject hSlot;
-		PhyObj poScript;
 
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
@@ -145,25 +145,27 @@ namespace StarterAssets
             JumpAndGravity();
 			GroundedCheck();
 			Move();
+			if(hSlot.transform.childCount > 0)
+			{
+				pickBut.SetActive(false);
+				dropBut.SetActive(true);
+			}
 		}       
         private void FixedUpdate()
 		{
 			if (Physics.SphereCast(_mainCamera.transform.position, 0.1f, _mainCamera.transform.forward, out hit, 5.0f, interactMask)){
-				if (hit.collider.gameObject.CompareTag("Switch"))
+                
+                if (hit.collider.gameObject.CompareTag("Switch"))
 				{
 					togBut.SetActive(true);
                 }
 				else if (hit.collider.gameObject.CompareTag("PhyObj"))
 				{
-					poScript = hit.collider.gameObject.GetComponent<PhyObj>();
-					if (!poScript.picked)
+					if (hSlot.transform.childCount == 0)
 					{
-						pickBut.SetActive(true);
-						pRb = hit.collider.GetComponent<Rigidbody>();
-					}
-					else
-					{
-						dropBut.SetActive(true);
+						dropBut.SetActive(false);	
+                        pickBut.SetActive(true);
+                        pRb = hit.collider.GetComponent<Rigidbody>();
 					}
                 }
 			}
@@ -315,12 +317,13 @@ namespace StarterAssets
 
         public void Drop()
         {
+			Rigidbody heldObj = hSlot.GetComponentInChildren<Rigidbody>();
             // Make it non-kinematic (enable physics)
-            pRb.isKinematic = false;
+            heldObj.isKinematic = false;
 
+            heldObj.AddForce(Vector3.forward * 500 * (1 / heldObj.mass));	
             // Remove parent
-            pRb.gameObject.transform.SetParent(null);
-
+            hSlot.transform.DetachChildren();
         }
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{

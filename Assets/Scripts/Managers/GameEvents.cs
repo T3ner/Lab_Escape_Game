@@ -8,14 +8,14 @@ public class GameEvents : MonoBehaviour
     public static GameEvents instance;
     private void Awake()
     {
-        if(instance == null)
+        if(instance != null)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         
     }

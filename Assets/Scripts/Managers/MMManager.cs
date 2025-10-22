@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MMManager : MonoBehaviour
 {
+    PlayerPrefs playerSettings;
     [SerializeField]
     private GameObject contButton;
     [SerializeField]
     private GameObject setBut;
 
-    [SerializeField]
+    public Slider vSlider;
+    public Slider sSlider;
 
     private void Awake()
     {
-           
+        
     }
     public void NewGame()
     {
@@ -26,8 +29,8 @@ public class MMManager : MonoBehaviour
     {
         SaveManger.instance.LoadGame();
     }
-    public void settings()
+    public void SaveSettings()
     {
-
+        
     }
 }
